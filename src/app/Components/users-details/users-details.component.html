@@ -1,0 +1,27 @@
+    <h3>User Details</h3>
+  
+    <div *ngIf="errorMessage">
+      <p class="text-danger">{{ errorMessage }}</p>
+    </div>
+  
+    <div *ngIf="userData">
+      <p><strong>ID:</strong> {{ userData.id }}</p>
+      <p><strong>First Name:</strong> {{ userData.firstName }}</p>
+      <p><strong>Last Name:</strong> {{ userData.lastName }}</p>
+      <p><strong>Email:</strong> {{ userData.email }}</p>
+  
+      <!-- Files Section -->
+      <div *ngIf="userData.files?.length > 0">
+        <h5>User File:</h5>
+        <ul>
+          <li *ngFor="let file of userData.files">
+            {{ file.fileName }}
+            <button class="btn btn-sm btn-outline-primary ms-2" (click)="DownloadFile(userData.id)">
+              Download
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  

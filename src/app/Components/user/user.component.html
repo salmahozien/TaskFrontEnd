@@ -1,0 +1,63 @@
+<div class="container d-flex justify-content-center">
+<form  class="form-group py-5 w-50 m-5" [formGroup]="UserFormFields" (submit)="FinalSave()">
+<div>
+  <label>First Name:</label>
+    <input class="form-control" type="text" formControlName="FirstName" placeholder="First Name">
+
+    <div *ngIf="UserFormFields.get('FirstName')?.invalid && UserFormFields.get('FirstName')?.touched">
+        <small class="text-danger">First Name is required</small>
+      </div>
+</div>
+<div class="form-group">
+  <label>Last Name:</label>
+    <input class="form-control" type="text" formControlName="LastName" placeholder="Last Name">
+
+    <div *ngIf="UserFormFields.get('LastName')?.invalid && UserFormFields.get('LastName')?.touched">
+        <small class="text-danger">Last Name is required</small>
+      </div>
+</div>
+<div class="form-group">
+  <label>E-mail:</label>
+      <input class="form-control" type="email" formControlName="Email" placeholder="Email">
+
+      <div *ngIf="UserFormFields.get('Email')?.invalid && UserFormFields.get('Email')?.touched">
+          <small class="text-danger">Email is required</small>
+        </div>
+</div>
+<div class="form-group">
+  <label>Phone Number:</label>
+        <input class="form-control" type="number" formControlName="PhoneNumber" placeholder="Phone Number">
+
+        <div *ngIf="UserFormFields.get('PhoneNumber')?.invalid && UserFormFields.get('PhoneNumber')?.touched">
+            <small class="text-danger">Phone Number is required</small>
+          </div>
+</div>
+<div class="form-group">
+  <label> Upload Images:</label>
+    <!-- set condition to appear file names if only selected files-->
+    <ng-container *ngIf="showFileInput">
+        <input class="form-control" type="file" multiple (change)="UploadImages($event)" accept=".png ,.jpeg ,.jpg" />
+    
+        <!-- file name display -->
+        <div *ngFor="let file of Images">
+            {{ file.name }}
+        </div>
+      </ng-container>
+</div>
+<div class="form-group">
+  <label>Signature</label>
+  <canvas #signatureCanvas width="400" height="200" style="border:1px solid #ccc;"></canvas>
+  <button type="button" (click)="clearSignature()" class="btn btn-secondary mt-2">Clear Signature</button>
+</div>
+      <!--Condition to make nubmer of files selected=0 when reset form-->
+      <span *ngIf="Images.length">{{ Images.length }} file(s)</span>
+
+      <div class="d-flex  justify-content-center py-5 ">
+      <button class="m-2 btn btn-primary" type="submit" [disabled]="UserFormFields.invalid || Images.length === 0 || isSubmet===true">Submit</button>
+
+    <button class="m-2 btn btn-danger " id="fileUpload" type="button" (click)="ResetForm()">Reset Form</button>
+    
+    <button class="m-2" type="button" (click)="BackToList()">Back To List</button>
+</div>
+</form>
+</div>
